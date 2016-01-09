@@ -25,13 +25,13 @@ chmod 777 ./test.sh
 
 Again, the absolute time is meaningless; it's the difference between the times that's important.
 
-- access time, small record vs obj (cached): record access is **much** faster than object access, by an order of magnitude. But consider that these two are both extremely fast.
+- access time, small record vs obj (cached): record access is 30x faster than object access. But consider that these two are both very fast.
 
 - access time with mutable + heap allocated value, record vs obj (cached): the hope was that object field caching (if that still exists) would help here, but no. Also, accessing a field that's mutable + holds heap value should be much slower than normal access, but I didn't find a way to fairly test both. If we compare `accessRec` and `mutHeapValueAccessRec`, the code and the result aren't too different. It's 3x difference but the latter has a `List.hd` call.
 
-- access time, obj cached vs uncached (open, small): insignificant
+- access time, obj cached vs uncached (open, small): insignificant, with uncached being... slightly faster?
 
-- access time, open vs closed obj: closed always slightly faster, but insignificant.
+- access time, open vs closed obj: insignificant.
 
 - creation time, small record vs obj: object always slightly slower. Not very significant.
 
@@ -39,4 +39,4 @@ Again, the absolute time is meaningless; it's the difference between the times t
 
 - update time, record vs obj, small: object twice slower.
 
-- update time, record vs obj, big: **insignificant**.
+- update time, record vs obj, big: object **barely** slower.
