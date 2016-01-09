@@ -27,7 +27,7 @@ Again, the absolute time is meaningless; it's the difference between the times t
 
 - access time, small record vs obj (cached): record access is 30x faster than object access. But consider that these two are both very fast.
 
-- access time with mutable + heap allocated value, record vs obj (cached): the hope was that object field caching (if that still exists) would help here, but no. Also, accessing a field that's mutable + holds heap value should be much slower than normal access, but I didn't find a way to fairly test both. If we compare `accessRec` and `mutHeapValueAccessRec`, the code and the result aren't too different. It's 3x difference but the latter has a `List.hd` call.
+- access time with mutable + heap allocated value, record vs obj (cached): makes object access only twice slower. Hypothesis: write barrier drags record field access time down + object field caching helped.
 
 - access time, obj cached vs uncached (open, small): insignificant, with uncached being... slightly faster?
 
@@ -50,50 +50,50 @@ the 'with' clause is useless.
 =========start benchmarks=========
 
 access time, small record vs obj (cached)
-9999999
-Record time: 0.013281.
-45009726
-Object time: 0.376059.
+49999995
+Record time: 0.015208.
+45003292
+Object time: 0.351087.
 
 access time with mutable + heap allocated value, record vs obj (cached)
-0
-Record time: 0.038695.
-44997301
-Object time: 0.445683.
+79999992
+Record time: 0.035720.
+39999996
+Object time: 0.079826.
 
 access time, obj cached vs uncached (open, small)
-45006065
-Cached time: 0.410848.
-45006158
-Non-cached time: 0.397027.
+44998861
+Cached time: 0.396473.
+44993637
+Non-cached time: 0.386127.
 
 access time, open vs closed obj
-45009944
-Open time: 0.362000.
-44988617
-Closed time: 0.365341.
+45005364
+Open time: 0.340496.
+45000628
+Closed time: 0.353448.
 
 creation time, small record vs obj
-44996864
-Record time: 1.585582.
-44997510
-Object time: 1.753624.
+44989513
+Record time: 1.491161.
+45002089
+Object time: 1.635870.
 
 creation time, big record vs obj
-44997527
-Record time: 4.086942.
-44998179
-Object time: 2.255656.
+45007085
+Record time: 3.683870.
+45001413
+Object time: 2.192437.
 
 update time, record vs obj, small
-45007243
-Record time: 0.321644.
-44991965
-Object time: 0.680158.
+45015794
+Record time: 0.346690.
+44989103
+Object time: 0.616129.
 
 update time, record vs obj, big
-44985275
-Record time: 0.699090.
-44996427
-Object time: 0.693821.
+44992502
+Record time: 0.628196.
+45000175
+Object time: 0.668704.
 ```

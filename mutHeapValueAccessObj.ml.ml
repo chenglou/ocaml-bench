@@ -3,7 +3,10 @@ life perf better (we don't know for sure though); anyway, the results are here *
 Random.self_init ();;
 
 type objz = <a: int list ref>;;
-let ooo: objz = object method a = ref [Random.int 10] end;;
+let ooo: objz = object
+  val _a = ref [Random.int 10]
+  method a = _a
+end;;
 let rec bla n acc =
   if n = 0 then acc
   else bla (n - 1) (acc + List.hd !(ooo#a));;

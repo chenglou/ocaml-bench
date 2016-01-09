@@ -1,6 +1,9 @@
 Random.self_init ();;
 
-let arr = Array.make 10000000 (object method c = (Random.int 10) end);;
+let arr = Array.make 10000000 (object
+  val _c = Random.int 10
+  method c = _c
+end);;
 let rec bla n acc =
   if n = 0 then acc
   else bla (n - 1) (acc + arr.(n)#c);;

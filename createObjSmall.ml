@@ -2,7 +2,10 @@ Random.self_init ();;
 
 type someObj = <a: int>;;
 (* explicitly annotate, so that it doesn't generate a brand new <a: int> type *)
-let f (_: int): someObj = object method a = (Random.int 10) end;;
+let f (_: int): someObj = object
+  val _a = Random.int 10
+  method a = _a
+end;;
 let start = Sys.time ();;
 let arr = Array.init 10000000 f;;
 let time = Sys.time () -. start;;

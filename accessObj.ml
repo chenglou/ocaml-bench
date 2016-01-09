@@ -1,7 +1,10 @@
 Random.self_init ();;
 
 type obj = <a: int>;;
-let ooo: obj = object method a = (Random.int 10) end;;
+let ooo: obj = object
+  val _a = Random.int 10
+  method a = _a
+end;;
 let rec bla n acc =
   if n = 0 then acc
   else bla (n - 1) (acc + ooo#a);;
