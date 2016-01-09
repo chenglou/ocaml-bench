@@ -1,7 +1,3 @@
-(* open Core_bench.Std;; *)
-
-(* TODO: split into different files to avoid caching *)
-
 (* to store value of a record/obj. To avoid constant lifting of record *)
 Random.self_init ();;
 
@@ -24,6 +20,8 @@ to dead code eliminate the previous operations *)
 print_int (bla 9999999 0);;
 Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
 
+(* pragma split *)
+
 type obj = <a: int>;;
 let ooo: obj = object method a = (Random.int 10) end;;
 let rec bla n acc =
@@ -33,7 +31,7 @@ let start = Sys.time ();;
 print_int (bla 9999999 0);;
 Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
 
-print_endline "----------------";;
+(* pragma split *)
 
 print_endline "access time with mutable + heap allocated value, small record vs obj (cached)";;
 (* these will create a write barrier per access, which possibly indicate real
@@ -55,6 +53,8 @@ to dead code eliminate the previous operations *)
 print_int (bla 9999999 0);;
 Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
 
+(* pragma split *)
+
 type objz = <a: int list ref>;;
 let ooo: objz = object method a = ref [Random.int 10] end;;
 let rec bla n acc =
@@ -64,7 +64,7 @@ let start = Sys.time ();;
 print_int (bla 9999999 0);;
 Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
 
-print_endline "----------------";;
+(* pragma split *)
 
 print_endline "access time, obj cached vs uncached (open, small)";;
 let arr = Array.make 10000000 (object method c = (Random.int 10) end);;
@@ -75,6 +75,8 @@ let start = Sys.time ();;
 print_int (bla 9999999 0);;
 Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
 
+(* pragma split *)
+
 let arr = Array.init 10000000 (fun _ -> object method cc = (Random.int 10) end);;
 let rec bla n acc =
   if n = 0 then acc
@@ -83,7 +85,7 @@ let start = Sys.time ();;
 print_int (bla 9999999 0);;
 Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
 
-print_endline "----------------";;
+(* pragma split *)
 
 print_endline "creation time, small record vs obj";;
 type someRec = {a: int};;
@@ -94,6 +96,8 @@ let rec bla n acc =
   if n = 0 then acc
   else bla (n - 1) (acc + arr.(n).a);;
 print_int (bla 9999999 0);;
+
+(* pragma split *)
 
 type someObj = <a: int>;;
 let start = Sys.time ();;
@@ -106,7 +110,7 @@ let rec bla n acc =
   else bla (n - 1) (acc + arr.(n)#a);;
 print_int (bla 9999999 0);;
 
-print_endline "\n----------------";;
+(* pragma split *)
 
 (* I've removed the tests for access of big records/obj. Both former and latter
 should be constant speed *)
@@ -119,6 +123,8 @@ let start = Sys.time ();;
 print_int (bla 9999999 0 (object method gg = Random.int 10 end));;
 Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
 
+(* pragma split *)
+
 let rec bla n acc (o: <ggg: int>) =
   if n = 0 then acc
   else bla (n - 1) (acc + o#ggg) o;;
@@ -126,7 +132,7 @@ let start = Sys.time ();;
 print_int (bla 9999999 0 (object method ggg = Random.int 10 end));;
 Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
 
-print_endline "\n----------------";;
+(* pragma split *)
 
 print_endline "update time, record vs obj, small";;
 type recked = {a: int};;
@@ -136,6 +142,8 @@ let rec bla n acc o =
 let start = Sys.time ();;
 print_int (bla 9999999 0 {a = Random.int 10});;
 Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
+
+(* pragma split *)
 
 let noChoice = object
   val _ok = Random.int 10
@@ -149,7 +157,7 @@ let start = Sys.time ();;
 print_int (bla 9999999 0 noChoice);;
 Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
 
-print_endline "\n----------------";;
+(* pragma split *)
 
 print_endline "update time, record vs obj, big";;
 type myRecord2 = {
@@ -181,6 +189,8 @@ let start = Sys.time ();;
 print_int (bla 9999999 0 last);;
 Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
 
+(* pragma split *)
+
 let last = object
   method a = 0;
   method b = 1;
@@ -201,4 +211,58 @@ let start = Sys.time ();;
 print_int (bla 9999999 0 last);;
 Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
 
-print_endline "\n----------------";;
+(* pragma split *)
+
+print_endline "creation time, big record vs obj";;
+type myRecord3 = {
+  a: int;
+  b: int;
+  c: float;
+  d: float;
+  e: string;
+  f: string;
+  g: int list;
+  h: int list;
+  i: int
+};;
+let start = Sys.time ();;
+let arr = Array.init 10000000 (fun _ -> {
+  a = 0;
+  b = 1;
+  c = 0.;
+  d = 1.;
+  e = "hi";
+  f = "bye";
+  g = [1; 2];
+  h = [1; 2];
+  i = Random.int 10
+});;
+Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
+let rec bla n acc =
+  if n = 0 then acc
+  else bla (n - 1) (acc + arr.(n).a);;
+print_int (bla 9999999 0);;
+
+(* pragma split *)
+
+let start = Sys.time ();;
+(* explicitly annotate, so that it doesn't generate a brand new <a: int> type *)
+let f (_: int): someObj = object method a = (Random.int 10) end;;
+let arr = Array.init 10000000 (fun _ -> object
+  method a = 0;
+  method b = 1;
+  method c = 0.;
+  method d = 1.;
+  method e = "hi";
+  method f = "bye";
+  method g = [1; 2];
+  method h = [1; 2];
+  val _i = Random.int 10;
+  method i = _i;
+  method up = {<_i = Random.int 10>}
+end);;
+Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
+let rec bla n acc =
+  if n = 0 then acc
+  else bla (n - 1) (acc + arr.(n)#a);;
+print_int (bla 9999999 0);;
