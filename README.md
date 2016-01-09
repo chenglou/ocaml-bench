@@ -40,3 +40,60 @@ Again, the absolute time is meaningless; it's the difference between the times t
 - update time, record vs obj, small: object twice slower.
 
 - update time, record vs obj, big: object **barely** slower.
+
+## Sample result
+
+```
+File "updateRecSmall.ml", line 6, characters 31-57:
+Warning 23: all the fields are explicitly listed in this record:
+the 'with' clause is useless.
+=========start benchmarks=========
+
+access time, small record vs obj (cached)
+9999999
+Record time: 0.013281.
+45009726
+Object time: 0.376059.
+
+access time with mutable + heap allocated value, record vs obj (cached)
+0
+Record time: 0.038695.
+44997301
+Object time: 0.445683.
+
+access time, obj cached vs uncached (open, small)
+45006065
+Cached time: 0.410848.
+45006158
+Non-cached time: 0.397027.
+
+access time, open vs closed obj
+45009944
+Open time: 0.362000.
+44988617
+Closed time: 0.365341.
+
+creation time, small record vs obj
+44996864
+Record time: 1.585582.
+44997510
+Object time: 1.753624.
+
+creation time, big record vs obj
+44997527
+Record time: 4.086942.
+44998179
+Object time: 2.255656.
+
+update time, record vs obj, small
+45007243
+Record time: 0.321644.
+44991965
+Object time: 0.680158.
+
+update time, record vs obj, big
+44985275
+Record time: 0.699090.
+44996427
+Object time: 0.693821.
+```
