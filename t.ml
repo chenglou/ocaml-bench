@@ -184,7 +184,7 @@ let last = {
 };;
 let rec bla n acc o =
   if n = 0 then acc
-  else bla (n - 1) (acc + o.a) {o with i = Random.int 10};;
+  else bla (n - 1) (acc + o.i) {o with i = Random.int 10};;
 let start = Sys.time ();;
 print_int (bla 9999999 0 last);;
 Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
@@ -240,14 +240,13 @@ let arr = Array.init 10000000 (fun _ -> {
 Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
 let rec bla n acc =
   if n = 0 then acc
-  else bla (n - 1) (acc + arr.(n).a);;
+  else bla (n - 1) (acc + arr.(n).i);;
 print_int (bla 9999999 0);;
 
 (* pragma split *)
 
 let start = Sys.time ();;
 (* explicitly annotate, so that it doesn't generate a brand new <a: int> type *)
-let f (_: int): someObj = object method a = (Random.int 10) end;;
 let arr = Array.init 10000000 (fun _ -> object
   method a = 0;
   method b = 1;
@@ -264,5 +263,5 @@ end);;
 Printf.printf "\nExecution time: %f.\n" (Sys.time () -. start);;
 let rec bla n acc =
   if n = 0 then acc
-  else bla (n - 1) (acc + arr.(n)#a);;
+  else bla (n - 1) (acc + arr.(n)#i);;
 print_int (bla 9999999 0);;
