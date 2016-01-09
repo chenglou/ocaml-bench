@@ -25,21 +25,21 @@ chmod 777 ./test.sh
 
 Again, the absolute time is meaningless; it's the difference between the times that's important.
 
-- access time, small record vs obj (cached): record access is 30x faster than object access. But consider that these two are both very fast.
+- access time, small record vs obj (cached): record access is 4x faster than object access. But consider that these two are both very fast.
 
 - access time with mutable + heap allocated value, record vs obj (cached): makes object access only twice slower. Hypothesis: write barrier drags record field access time down + object field caching helped.
 
-- access time, obj cached vs uncached (open, small): insignificant, with uncached being... slightly faster?
+- access time, obj cached vs uncached (open, small): insignificant.
 
 - access time, open vs closed obj: insignificant.
 
-- creation time, small record vs obj: object always slightly slower. Not very significant.
+- creation time, small record vs obj: object always slightly slower.
 
 - creation time, big record vs obj: object always 1.5x **faster**! Is there some laziness involved?
 
 - update time, record vs obj, small: object twice slower.
 
-- update time, record vs obj, big: object **barely** slower.
+- update time, record vs obj, big: same. Insignificant.
 
 ## Sample result
 
@@ -50,50 +50,49 @@ the 'with' clause is useless.
 =========start benchmarks=========
 
 access time, small record vs obj (cached)
-49999995
-Record time: 0.015208.
-45003292
-Object time: 0.351087.
+79999992
+Record time: 0.014482.
+59999994
+Object time: 0.054754.
 
 access time with mutable + heap allocated value, record vs obj (cached)
-79999992
-Record time: 0.035720.
-39999996
-Object time: 0.079826.
+9999999
+Record time: 0.033259.
+19999998
+Object time: 0.071915.
 
 access time, obj cached vs uncached (open, small)
-44998861
-Cached time: 0.396473.
-44993637
-Non-cached time: 0.386127.
+79999992
+Cached time: 0.061815.
+44984228
+Non-cached time: 0.062184.
 
 access time, open vs closed obj
-45005364
-Open time: 0.340496.
-45000628
-Closed time: 0.353448.
+59999994
+Open time: 0.051585.
+69999993
+Closed time: 0.048628.
 
 creation time, small record vs obj
-44989513
-Record time: 1.491161.
-45002089
-Object time: 1.635870.
+45005418
+Record time: 1.577238.
+44999001
+Object time: 2.241864.
 
 creation time, big record vs obj
-45007085
-Record time: 3.683870.
-45001413
-Object time: 2.192437.
+44983941
+Record time: 3.817168.
+44996065
+Object time: 2.229992.
 
 update time, record vs obj, small
-45015794
-Record time: 0.346690.
-44989103
-Object time: 0.616129.
+45013943
+Record time: 0.366677.
+44986307
+Object time: 0.669070.
 
 update time, record vs obj, big
-44992502
-Record time: 0.628196.
-45000175
-Object time: 0.668704.
-```
+44984897
+Record time: 0.652688.
+44974243
+Object time: 0.652140.```
