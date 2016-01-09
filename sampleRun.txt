@@ -1,0 +1,64 @@
+File "updateRecSmall.ml", line 6, characters 31-57:
+Warning 23: all the fields are explicitly listed in this record:
+the 'with' clause is useless.
+=========start benchmarks=========
+
+access time, small record vs obj (cached)
+39999996
+Record time: 0.013019.
+49999995
+Object time: 0.049767.
+
+access time, big record vs obj (cached)
+69999993
+Record time: 0.012897.
+29999997
+Object time: 0.051593.
+
+access time with mutable + heap allocated value, record vs obj (cached)
+9999999
+Record time: 0.032201.
+69999993
+Object time: 0.057882.
+
+access time, obj cached vs uncached, small
+69999993
+Cached time: 0.057301.
+44999367
+Non-cached time: 0.056416.
+
+access time, obj cached vs uncached, big
+69999993
+Cached time: 0.052290.
+44993741
+Non-cached time: 0.055156.
+
+access time, open vs closed obj
+9999999
+Open time: 0.045119.
+49999995
+Closed time: 0.042058.
+
+creation time, small record vs obj
+44993852
+Record time: 1.483684.
+45014475
+Object time: 1.992385.
+
+creation time, big record vs obj
+45016337
+Record time: 3.752008.
+45007498
+Object time: 2.199752.
+
+update time, record vs obj, small
+45002085
+Record time: 0.341014.
+44988118
+Object time: 0.625527.
+
+update time, record vs obj, big
+44996705
+Record time: 0.650917.
+44990257
+Object time: 0.635475.
