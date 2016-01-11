@@ -1,10 +1,11 @@
+// to see what the raw output is like, run ./_test.sh. We take the raw results,
+// remove the noise, and reformat, in order to get absolute numbers
 var extract = '(.+): (.+)\.';
 
 function roundTo6thDecimal(num) {
-  return Math.round(num * 1000000) / 100000;
+  return Math.round(num * 1000000) / 1000000;
 }
 
-// to see what the raw output is like, run ./_test.sh
 var output = require('fs').readFileSync('./temp', 'utf-8')
   .split('\n\n')
   .slice(1)

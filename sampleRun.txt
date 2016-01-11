@@ -1,39 +1,39 @@
 access time, small record vs obj (cached)
-Record time: 0.0374
-Object time: 0.42718
+Record time: 0.003949
+Object time: 0.041039
 
 access time, big record vs obj (cached)
-Record time: 0.04299
-Object time: 0.48723
+Record time: 0.004216
+Object time: 0.036675
 
 access time with mutable + heap allocated value, record vs obj (cached)
-Record time: 0.10684
-Object time: 0.19454
+Record time: 0.005277
+Object time: 0.01973
 
 access time, obj cached vs uncached, small
-Cached time: 0.35578
-Non-cached time: 0.75839
+Cached time: 0.036624
+Non-cached time: 0.052122
 
 access time, obj cached vs uncached, big
-Cached time: 0.34929
-Non-cached time: 0.50449
+Cached time: 0.046132
+Non-cached time: 0.059843
 
 access time, open vs closed obj
-Open time: 0.29178
-Closed time: 0.28686
+Open time: 0.021395
+Closed time: 0.03115
 
 creation time, small record vs obj
-Record time: 14.7641
-Object time: 18.46096
+Record time: 1.2071
+Object time: 1.840237
 
 creation time, big record vs obj
-Record time: 31.60572
-Object time: 17.98036
+Record time: 3.379428
+Object time: 1.631346
 
 update time, record vs obj, small
-Record time: 0.31247
-Object time: 2.9647
+Record time: 0 (too small)
+Object time: 0.349383
 
 update time, record vs obj, big
-Record time: 3.32674
-Object time: 3.51212
+Record time: 0.314231
+Object time: 0.280682
