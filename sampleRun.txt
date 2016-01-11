@@ -1,64 +1,39 @@
-File "updateRecSmall.ml", line 6, characters 31-57:
-Warning 23: all the fields are explicitly listed in this record:
-the 'with' clause is useless.
-=========start benchmarks=========
-
 access time, small record vs obj (cached)
-39999996
-Record time: 0.013019.
-49999995
-Object time: 0.049767.
+Record time: 0.0374
+Object time: 0.42718
 
 access time, big record vs obj (cached)
-69999993
-Record time: 0.012897.
-29999997
-Object time: 0.051593.
+Record time: 0.04299
+Object time: 0.48723
 
 access time with mutable + heap allocated value, record vs obj (cached)
-9999999
-Record time: 0.032201.
-69999993
-Object time: 0.057882.
+Record time: 0.10684
+Object time: 0.19454
 
 access time, obj cached vs uncached, small
-69999993
-Cached time: 0.057301.
-44999367
-Non-cached time: 0.056416.
+Cached time: 0.35578
+Non-cached time: 0.75839
 
 access time, obj cached vs uncached, big
-69999993
-Cached time: 0.052290.
-44993741
-Non-cached time: 0.055156.
+Cached time: 0.34929
+Non-cached time: 0.50449
 
 access time, open vs closed obj
-9999999
-Open time: 0.045119.
-49999995
-Closed time: 0.042058.
+Open time: 0.29178
+Closed time: 0.28686
 
 creation time, small record vs obj
-44993852
-Record time: 1.483684.
-45014475
-Object time: 1.992385.
+Record time: 14.7641
+Object time: 18.46096
 
 creation time, big record vs obj
-45016337
-Record time: 3.752008.
-45007498
-Object time: 2.199752.
+Record time: 31.60572
+Object time: 17.98036
 
 update time, record vs obj, small
-45002085
-Record time: 0.341014.
-44988118
-Object time: 0.625527.
+Record time: 0.31247
+Object time: 2.9647
 
 update time, record vs obj, big
-44996705
-Record time: 0.650917.
-44990257
-Object time: 0.635475.
+Record time: 3.32674
+Object time: 3.51212

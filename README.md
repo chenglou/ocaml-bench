@@ -12,32 +12,33 @@ Some tricks used to make the benchmark more correct:
 
 - There are some large numbers printed before each test case, to make sure the compiler doesn't dead code eliminate the relevant operations (used by the printing).
 
+- `_test.sh` outputs the raw values, ./test.sh does some post-processing to normalize everything (remove benchmark noise, etc.).
+
 ## To run
 ```
+chmod 777 ./_test.sh
 chmod 777 ./test.sh
 ./test.sh
 ```
 
 ## Lessons
 
-Again, the absolute time is meaningless; it's the difference between the times that's important.
+- access time, small record vs obj (cached): record access is an order of magnitude faster than object access.
 
-- access time, small record vs obj (cached): record access is much faster than object access. But consider that these two are both very fast.
+- access time, big record vs obj (cached): object field access is supposedly log(n) (binary tree), so should be a bit slower, relative to the previous test.
 
-- access time, big record vs obj (cached): more useless benchmark than it sounds. The object is cached (once), so we're basically testing whether the cache lookup itself would take time. It doesn't. Insignificant.
+- access time with mutable + heap allocated value, record vs obj (cached): makes object access relatively faster, since one small bottleneck is the write barrier created by mutable + heap allocated value.
 
-- access time with mutable + heap allocated value, record vs obj (cached): makes object access only twice slower (rememeber that the "twice" is between two absolute measurements and doesn't mean anything. We can only talk about differences). Hypothesis: write barrier drags record field access time down + object field caching helped.
+- access time, obj cached vs uncached, small: cached faster.
 
-- access time, obj cached vs uncached, small: insignificant.
+- access time, obj cached vs uncached, big: cached faster.
 
-- access time, obj cached vs uncached, big: insignificant. **Where did the caching benefit go?**
+- access time, open vs closed obj: open slightly slower. Not too significant?
 
-- access time, open vs closed obj: insignificant.
-
-- creation time, small record vs obj: object always slightly slower.
+- creation time, small record vs obj: object always slower.
 
 - creation time, big record vs obj: object always 1.5x **faster**! Is there some laziness involved?
 
-- update time, record vs obj, small: object slower.
+- update time, record vs obj, small: object **much** slower.
 
-- update time, record vs obj, big: same. Insignificant.
+- update time, record vs obj, big: more or less the same.
