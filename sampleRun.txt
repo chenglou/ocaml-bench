@@ -1,39 +1,70 @@
-access time, small record vs obj (cached)
-Record time: 0.003949
-Object time: 0.041039
-
-access time, big record vs obj (cached)
-Record time: 0.004216
-Object time: 0.036675
-
-access time with mutable + heap allocated value, record vs obj (cached)
-Record time: 0.005277
-Object time: 0.01973
-
-access time, obj cached vs uncached, small
-Cached time: 0.036624
-Non-cached time: 0.052122
-
-access time, obj cached vs uncached, big
-Cached time: 0.046132
-Non-cached time: 0.059843
-
-access time, open vs closed obj
-Open time: 0.021395
-Closed time: 0.03115
-
-creation time, small record vs obj
-Record time: 1.2071
-Object time: 1.840237
-
-creation time, big record vs obj
-Record time: 3.379428
-Object time: 1.631346
-
-update time, record vs obj, small
-Record time: 0 (too small)
-Object time: 0.349383
-
-update time, record vs obj, big
-Record time: 0.314231
-Object time: 0.280682
+Estimated testing time 20s (2 benchmarks x 10s). Change using -quota SECS.
+┌─────────────────────┬──────────┬────────────┐
+│ Name                │ Time/Run │ Percentage │
+├─────────────────────┼──────────┼────────────┤
+│ access small record │ 146.87us │     26.55% │
+│ access small object │ 553.11us │    100.00% │
+└─────────────────────┴──────────┴────────────┘
+Estimated testing time 20s (2 benchmarks x 10s). Change using -quota SECS.
+┌───────────────────┬──────────┬────────────┐
+│ Name              │ Time/Run │ Percentage │
+├───────────────────┼──────────┼────────────┤
+│ access big record │ 154.76us │     28.33% │
+│ access big object │ 546.26us │    100.00% │
+└───────────────────┴──────────┴────────────┘
+Estimated testing time 20s (2 benchmarks x 10s). Change using -quota SECS.
+┌────────────────────────────┬──────────┬──────────┬──────────┬──────────┬────────────┐
+│ Name                       │ Time/Run │  mWd/Run │ mjWd/Run │ Prom/Run │ Percentage │
+├────────────────────────────┼──────────┼──────────┼──────────┼──────────┼────────────┤
+│ access mutable heap record │ 593.34us │ 200.00kw │    1.53w │    1.53w │     63.55% │
+│ access mutable heap object │ 933.71us │ 200.00kw │          │          │    100.00% │
+└────────────────────────────┴──────────┴──────────┴──────────┴──────────┴────────────┘
+Estimated testing time 20s (2 benchmarks x 10s). Change using -quota SECS.
+┌────────────────────────────┬──────────┬────────────┐
+│ Name                       │ Time/Run │ Percentage │
+├────────────────────────────┼──────────┼────────────┤
+│ access small obj cached    │ 741.41us │     91.76% │
+│ access small obj noncached │ 808.00us │    100.00% │
+└────────────────────────────┴──────────┴────────────┘
+Estimated testing time 20s (2 benchmarks x 10s). Change using -quota SECS.
+┌──────────────────────────┬──────────┬────────────┐
+│ Name                     │ Time/Run │ Percentage │
+├──────────────────────────┼──────────┼────────────┤
+│ access big obj cached    │ 589.65us │     72.34% │
+│ access big obj noncached │ 815.09us │    100.00% │
+└──────────────────────────┴──────────┴────────────┘
+Estimated testing time 20s (2 benchmarks x 10s). Change using -quota SECS.
+┌───────────────┬──────────┬────────────┐
+│ Name          │ Time/Run │ Percentage │
+├───────────────┼──────────┼────────────┤
+│ access open   │ 514.16us │     95.59% │
+│ access closed │ 537.87us │    100.00% │
+└───────────────┴──────────┴────────────┘
+Estimated testing time 20s (2 benchmarks x 10s). Change using -quota SECS.
+┌─────────────────────┬──────────┬──────────┬──────────┬──────────┬────────────┐
+│ Name                │ Time/Run │  mWd/Run │ mjWd/Run │ Prom/Run │ Percentage │
+├─────────────────────┼──────────┼──────────┼──────────┼──────────┼────────────┤
+│ create small record │   3.78ms │ 200.00kw │    1.58w │    1.58w │     51.02% │
+│ create small object │   7.41ms │ 400.00kw │   -0.11w │   -0.11w │    100.00% │
+└─────────────────────┴──────────┴──────────┴──────────┴──────────┴────────────┘
+Estimated testing time 20s (2 benchmarks x 10s). Change using -quota SECS.
+┌───────────────────┬──────────┬────────────┬──────────┬──────────┬────────────┐
+│ Name              │ Time/Run │    mWd/Run │ mjWd/Run │ Prom/Run │ Percentage │
+├───────────────────┼──────────┼────────────┼──────────┼──────────┼────────────┤
+│ create big record │   3.94ms │ 1_000.03kw │   38.18w │   38.18w │     61.22% │
+│ create big object │   6.43ms │   400.00kw │   -0.62w │   -0.62w │    100.00% │
+└───────────────────┴──────────┴────────────┴──────────┴──────────┴────────────┘
+Estimated testing time 20s (2 benchmarks x 10s). Change using -quota SECS.
+┌─────────────────────┬──────────┬──────────┬──────────┬──────────┬────────────┐
+│ Name                │ Time/Run │  mWd/Run │ mjWd/Run │ Prom/Run │ Percentage │
+├─────────────────────┼──────────┼──────────┼──────────┼──────────┼────────────┤
+│ update small record │   3.11ms │ 200.00kw │    1.57w │    1.57w │     52.29% │
+│ update small object │   5.95ms │ 400.00kw │    6.05w │    6.05w │    100.00% │
+└─────────────────────┴──────────┴──────────┴──────────┴──────────┴────────────┘
+Estimated testing time 20s (2 benchmarks x 10s). Change using -quota SECS.
+┌───────────────────┬──────────┬────────────┬──────────┬──────────┬────────────┐
+│ Name              │ Time/Run │    mWd/Run │ mjWd/Run │ Prom/Run │ Percentage │
+├───────────────────┼──────────┼────────────┼──────────┼──────────┼────────────┤
+│ update big record │   6.29ms │ 1_000.01kw │   38.20w │   38.20w │     98.86% │
+│ update big object │   6.36ms │   400.00kw │    5.82w │    5.82w │    100.00% │
+└───────────────────┴──────────┴────────────┴──────────┴──────────┴────────────┘
