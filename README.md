@@ -1,6 +1,6 @@
 ## Comparison of various operation speeds of OCaml record vs Object
 
-**Note** actually most of these are dead wrong. I have no idea what I'm doing. Feel free to modify the tests but don't look at the conclusion below!
+**Note** actually most of these are dead wrong. I have no idea what I'm doing. Feel free to modify the tests but don't look at the conclusion at the end!
 
 ```
 lurk
